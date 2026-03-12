@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LUKE – The budgeting app built for Gen Z. Track expenses in 3 seconds, earn XP, and beat your budget." />
+  <title>LUKE – Bring light to your finances.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== NAV ========== -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner container">
+      <a href="#" class="nav-logo">LUKE</a>
+      <a href="#waitlist" class="btn btn-primary btn-sm js-scroll">Get Started</a>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="container hero-content">
+      <span class="badge fade-up">✦ Waitlist Open Now</span>
+      <h1 class="hero-title fade-up">Bring light to<br>your finances.</h1>
+      <p class="hero-sub fade-up">Track expenses in 3 seconds. Earn XP. Beat your budget.</p>
+      <form class="waitlist-form fade-up" id="hero-form" novalidate>
+        <div class="form-row">
+          <input type="email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
+          <button type="submit" class="btn btn-primary">Save Now</button>
+        </div>
+        <p class="form-disclaimer">No spam. Unsubscribe anytime. 🔒</p>
+      </form>
+      <div class="social-proof fade-up">
+        <div class="avatars">
+          <div class="avatar" style="background:#ff7675;"></div>
+          <div class="avatar" style="background:#fdcb6e;"></div>
+          <div class="avatar" style="background:#00d285;"></div>
+          <div class="avatar" style="background:#6c5ce7;"></div>
+        </div>
+        <p><strong class="counter" data-target="247">0</strong>+ students already on the list</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== TICKER ========== -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker-track">
+      <span>Gen Z Finance ✦</span><span>Zero Spreadsheets ✦</span><span>Earn XP ✦</span>
+      <span>3-Second Logging ✦</span><span>Beat Your Budget ✦</span><span>Back Tap Entry ✦</span>
+      <span>Dark Mode ✦</span><span>Privacy First ✦</span>
+      <span>Gen Z Finance ✦</span><span>Zero Spreadsheets ✦</span><span>Earn XP ✦</span>
+      <span>3-Second Logging ✦</span><span>Beat Your Budget ✦</span><span>Back Tap Entry ✦</span>
+      <span>Dark Mode ✦</span><span>Privacy First ✦</span>
+    </div>
+  </div>
+
+  <!-- ========== TRUST SECTION ========== -->
+  <section class="section trust-section" id="trust">
+    <div class="container">
+      <span class="section-tag fade-up">Built different</span>
+      <h2 class="section-title fade-up">Building a better budgeting<br>app for <em>us</em>.</h2>
+      <p class="section-sub fade-up">We're students who got tired of banking apps that looked like they were designed in 2009. LUKE is what we wished existed.</p>
+      <div class="trust-grid">
+        <div class="trust-card fade-up">
+          <div class="trust-icon">🎓</div>
+          <h3>Made by students,<br>for students</h3>
+          <p>We get the broke student life. Rent, Spotify, going out, saving up. LUKE is built around your actual life — not some textbook budget.</p>
+        </div>
+        <div class="trust-card fade-up">
+          <div class="trust-icon">⚡</div>
+          <h3>Zero friction.<br>Instant entry.</h3>
+          <p>The fastest expense tracker ever built for mobile. Log a €3.50 coffee before you finish paying. No menus, no categories, no nonsense.</p>
+        </div>
+        <div class="trust-card fade-up">
+          <div class="trust-icon">🔒</div>
+          <h3>Your data stays<br>yours.</h3>
+          <p>No selling your data to banks or advertisers. LUKE is built on privacy-first principles. What you spend is your business.</p>
+        </div>
+        <div class="trust-card fade-up">
+          <div class="trust-icon">🌍</div>
+          <h3>For every Gen Z,<br>everywhere</h3>
+          <p>Whether you're in Berlin, Vienna, or London — LUKE supports your currency and your lifestyle. No borders on good budgeting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURES ========== -->
+  <section class="section features-section" id="features">
+    <div class="container">
+      <span class="section-tag fade-up">How it works</span>
+      <h2 class="section-title fade-up">Your finances,<br>simplified.</h2>
+      <div class="features-grid">
+
+        <div class="feature-card fade-up">
+          <div class="feature-icon-wrap" style="background:rgba(108,92,231,0.15);">
+            <span class="feature-icon">⚡</span>
+          </div>
+          <h3>3-Second Tracking</h3>
+          <p>Log any expense faster than you can say "I'm broke." Amount → Category → Done. Seriously, that's it.</p>
+          <div class="feature-demo">
+            <div class="demo-input-sim">
+              <span class="demo-amount">€ 4.50</span>
+              <span class="demo-cat">☕ Coffee</span>
+              <span class="demo-check">✓</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card fade-up">
+          <div class="feature-icon-wrap" style="background:rgba(0,210,133,0.15);">
+            <span class="feature-icon">🎮</span>
+          </div>
+          <h3>Earn XP &amp; Level Up</h3>
+          <p>Every expense logged, every budget hit, every streak kept earns XP. Turn saving into a game you actually want to play.</p>
+          <div class="feature-demo">
+            <div class="xp-mini">
+              <span class="xp-label">Lv.4 → Lv.5</span>
+              <div class="xp-bar-mini"><div class="xp-fill-mini"></div></div>
+              <span class="xp-points">+50 XP</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card fade-up">
+          <div class="feature-icon-wrap" style="background:rgba(253,203,110,0.15);">
+            <span class="feature-icon">📊</span>
+          </div>
+          <h3>Beat Your Budget</h3>
+          <p>Smart weekly and monthly insights show exactly where your money goes. No surprises when the month ends.</p>
+          <div class="feature-demo">
+            <div class="budget-bar-demo">
+              <div class="budget-item-demo">
+                <span>Food</span>
+                <div class="bbar"><div class="bfill" style="width:75%;background:var(--purple);"></div></div>
+                <span class="bamt emerald">+€30</span>
+              </div>
+              <div class="budget-item-demo">
+                <span>Fun</span>
+                <div class="bbar"><div class="bfill" style="width:90%;background:#fdcb6e;"></div></div>
+                <span class="bamt" style="color:#fdcb6e;">−€12</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GAMIFICATION WOW ========== -->
+  <section class="section gamification-section" id="gamification">
+    <div class="container">
+      <span class="section-tag fade-up">Gamification</span>
+      <h2 class="section-title fade-up">Budgeting that actually<br><em>hits different.</em></h2>
+      <p class="section-sub fade-up">We turned the most boring part of adulting into something you'll actually open every day.</p>
+
+      <!-- Glowing XP Card -->
+      <div class="glow-card-wrap fade-up">
+        <div class="glow-card">
+          <div class="glow-card-inner">
+            <div class="gc-header">
+              <div class="gc-user">
+                <div class="gc-avatar">😎</div>
+                <div>
+                  <p class="gc-name">Alex K.</p>
+                  <p class="gc-rank">Budget Master</p>
+                </div>
+              </div>
+              <div class="gc-streak">
+                <span class="streak-fire">🔥</span>
+                <span class="streak-num">14</span>
+                <span class="streak-label">day streak</span>
+              </div>
+            </div>
+            <div class="gc-xp-section">
+              <div class="gc-level-row">
+                <span class="gc-level-label">Level 5</span>
+                <span class="gc-xp-label">1,340 / 2,000 XP</span>
+              </div>
+              <div class="gc-xp-bar">
+                <div class="gc-xp-fill" id="xpFill"></div>
+              </div>
+            </div>
+            <div class="gc-achievements">
+              <p class="gc-ach-title">Recent Badges</p>
+              <div class="gc-badges">
+                <div class="gc-badge unlocked" title="7-day streak">🔥</div>
+                <div class="gc-badge unlocked" title="First budget hit">🎯</div>
+                <div class="gc-badge unlocked" title="Saved €100">💰</div>
+                <div class="gc-badge unlocked" title="50 entries">⚡</div>
+                <div class="gc-badge locked" title="Locked">🔒</div>
+                <div class="gc-badge locked" title="Locked">🔒</div>
+              </div>
+            </div>
+            <div class="gc-stats">
+              <div class="gc-stat">
+                <span class="gc-stat-val emerald">+€ 150</span>
+                <span class="gc-stat-label">Saved this month</span>
+              </div>
+              <div class="gc-stat">
+                <span class="gc-stat-val">142</span>
+                <span class="gc-stat-label">Entries logged</span>
+              </div>
+              <div class="gc-stat">
+                <span class="gc-stat-val emerald">3 / 3</span>
+                <span class="gc-stat-label">Goals hit</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back Tap Feature -->
+      <div class="backtap-section fade-up">
+        <div class="backtap-card">
+          <div class="backtap-phone">
+            <div class="phone-body">
+              <div class="phone-screen-mini">
+                <span class="phone-plus">+ €</span>
+              </div>
+              <div class="tap-ripple"></div>
+            </div>
+          </div>
+          <div class="backtap-text">
+            <span class="feature-pill">iOS Exclusive</span>
+            <h3>Back Tap to log instantly.</h3>
+            <p>Double-tap the back of your iPhone and LUKE opens instantly, ready to log. From pocket to logged in under 3 seconds. Zero friction.</p>
+            <div class="backtap-steps">
+              <div class="step"><span class="step-num">1</span><span>Double tap the back of your phone</span></div>
+              <div class="step"><span class="step-num">2</span><span>Enter the amount</span></div>
+              <div class="step"><span class="step-num">3</span><span>Done. Logged.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== APP MOCKUPS ========== -->
+  <section class="section mockups-section" id="preview">
+    <div class="container">
+      <span class="section-tag fade-up">App Preview</span>
+      <h2 class="section-title fade-up">See it in action.</h2>
+      <p class="section-sub fade-up">A sneak peek at what's coming. Clean, dark, and built for how you actually live.</p>
+    </div>
+    <div class="mockups-scroll">
+
+      <!-- Phone 1: Dashboard -->
+      <div class="phone-mockup fade-up">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="screen-content">
+              <p class="screen-greeting">Good morning, Alex 👋</p>
+              <div class="screen-balance-card">
+                <p class="screen-balance-label">Available Balance</p>
+                <p class="screen-balance-val">€ 432.50</p>
+                <p class="screen-balance-change emerald">↑ +€ 150 this month</p>
+              </div>
+              <div class="screen-transactions">
+                <p class="screen-sec-title">Today</p>
+                <div class="screen-txn">
+                  <span class="txn-cat">☕</span>
+                  <span class="txn-name">Starbucks</span>
+                  <span class="txn-amt" style="color:#ff7675;">−€ 4.50</span>
+                </div>
+                <div class="screen-txn">
+                  <span class="txn-cat">🛒</span>
+                  <span class="txn-name">Rewe</span>
+                  <span class="txn-amt" style="color:#ff7675;">−€ 22.80</span>
+                </div>
+                <div class="screen-txn">
+                  <span class="txn-cat">💸</span>
+                  <span class="txn-name">Salary</span>
+                  <span class="txn-amt emerald">+€ 450.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="mockup-label">Dashboard</p>
+      </div>
+
+      <!-- Phone 2: Quick Entry (center / hero mockup) -->
+      <div class="phone-mockup center-mockup fade-up">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="screen-content">
+              <p class="screen-sec-title" style="margin-bottom:14px;">New Entry</p>
+              <div class="screen-amount-input">
+                <span class="screen-currency">€</span>
+                <span class="screen-amount-val">3.50</span>
+                <span class="screen-cursor"></span>
+              </div>
+              <div class="screen-cats">
+                <div class="screen-cat active-cat">☕ Coffee</div>
+                <div class="screen-cat">🍔 Food</div>
+                <div class="screen-cat">🎮 Fun</div>
+                <div class="screen-cat">🚌 Transport</div>
+                <div class="screen-cat">📦 Other</div>
+              </div>
+              <button class="screen-save-btn">Save ✓</button>
+            </div>
+          </div>
+        </div>
+        <p class="mockup-label">Quick Entry</p>
+      </div>
+
+      <!-- Phone 3: Progress / XP -->
+      <div class="phone-mockup fade-up">
+        <div class="phone-frame">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="screen-content">
+              <p class="screen-greeting">Your Progress 🏆</p>
+              <div class="screen-level-card">
+                <div class="level-badge">Lv. 5</div>
+                <p class="level-title">Budget Master</p>
+                <div class="screen-xp-bar">
+                  <div class="screen-xp-fill" style="width:67%;"></div>
+                </div>
+                <p class="level-xp-text">1,340 / 2,000 XP</p>
+              </div>
+              <div class="screen-badges-mini">
+                <span>🔥</span><span>🎯</span><span>💰</span><span>⚡</span>
+              </div>
+              <p class="screen-streak">🔥 14-day streak — keep it up!</p>
+            </div>
+          </div>
+        </div>
+        <p class="mockup-label">Progress</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== CTA / WAITLIST ========== -->
+  <section class="section cta-section" id="waitlist">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-orb"></div>
+        <span class="badge fade-up">🚀 Limited Spots</span>
+        <h2 class="cta-title fade-up">Don't miss<br>your spot.</h2>
+        <p class="cta-sub fade-up">Be the first to know when LUKE launches. Early users get exclusive perks and bonus XP.</p>
+        <form class="waitlist-form fade-up" id="cta-form" novalidate>
+          <div class="form-row">
+            <input type="email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
+            <button type="submit" class="btn btn-primary">Save Now</button>
+          </div>
+          <p class="form-disclaimer">No spam. Unsubscribe anytime. 🔒</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo">LUKE</a>
+          <p class="footer-tagline">Bring light to your finances.</p>
+        </div>
+        <div class="footer-socials">
+          <a href="#" class="social-link" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V9.07a8.16 8.16 0 004.77 1.52V7.14a4.85 4.85 0 01-1-.45z"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social-link" aria-label="X / Twitter">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 LUKE. All rights reserved.</p>
+        <div class="legal-links">
+          <a href="#" class="legal-link" id="btn-terms">Terms of Use</a>
+          <span class="legal-sep">·</span>
+          <a href="#" class="legal-link" id="btn-privacy">Privacy Policy</a>
+          <span class="legal-sep">·</span>
+          <a href="#" class="legal-link" id="btn-imprint">Imprint</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== LEGAL MODALS ========== -->
+
+  <!-- Terms -->
+  <div class="modal" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="modal-terms-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <div class="modal-drag"></div>
+      <button class="modal-close" aria-label="Close">✕</button>
+      <h2 id="modal-terms-title">Terms of Use</h2>
+      <p class="modal-placeholder">📋 Placeholder — full Terms of Use will be published before launch.</p>
+      <p>By joining the LUKE waitlist, you agree to receive product updates and launch notifications. You can unsubscribe at any time.</p>
+      <p>LUKE reserves the right to update these terms. Continued use of the service constitutes acceptance of the updated terms.</p>
+      <p style="font-size:13px;color:var(--w40);">Last updated: 2025</p>
+    </div>
+  </div>
+
+  <!-- Privacy -->
+  <div class="modal" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="modal-privacy-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <div class="modal-drag"></div>
+      <button class="modal-close" aria-label="Close">✕</button>
+      <h2 id="modal-privacy-title">Privacy Policy</h2>
+      <p class="modal-placeholder">🔒 Placeholder — full Privacy Policy will be published before launch.</p>
+      <p><strong>What we collect:</strong> Only your email address, used exclusively for waitlist communications.</p>
+      <p><strong>What we never do:</strong> We do not sell, rent, or share your personal data with third parties or advertisers.</p>
+      <p><strong>Your rights:</strong> You may request deletion of your data at any time by contacting us at hello@lukeapp.io.</p>
+      <p style="font-size:13px;color:var(--w40);">Last updated: 2025</p>
+    </div>
+  </div>
+
+  <!-- Imprint -->
+  <div class="modal" id="modal-imprint" role="dialog" aria-modal="true" aria-labelledby="modal-imprint-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-box">
+      <div class="modal-drag"></div>
+      <button class="modal-close" aria-label="Close">✕</button>
+      <h2 id="modal-imprint-title">Imprint</h2>
+      <p class="modal-placeholder">📄 Placeholder — complete Imprint (Impressum) will be added before launch.</p>
+      <p><strong>Responsible for content:</strong><br>[Your Full Name]<br>[Street Address]<br>[ZIP Code, City]<br>[Country]</p>
+      <p><strong>Contact:</strong><br>Email: hello@lukeapp.io</p>
+      <p style="font-size:13px;color:var(--w40);">Required per § 5 TMG (Germany) or equivalent local law.</p>
+    </div>
+  </div>
+
+  <!-- Success Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <span>🎉 You're on the list! We'll be in touch.</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
