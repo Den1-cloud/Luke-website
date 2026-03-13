@@ -113,11 +113,31 @@ function handleForm(formEl) {
     btn.style.background = 'var(--emerald)';
     btn.style.color      = '#1d1838';
  
-    // Send to Brevo (secure via server)
+    // Send to Brevo + update counter immediately
     fetch('/api/counter', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ email: email })
+    }).then(() => {
+      document.querySelectorAll('.counter').forEach(el => {
+        const current = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10) || 0;
+        const newTarget = current + 1;
+        el.dataset.target = newTarget;
+        const duration = 600;
+        const frameTime = 16;
+        const totalFrames = duration / frameTime;
+        let frame = 0;
+        const timer = setInterval(() => {
+          frame++;
+          const progress = frame / totalFrames;
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(current + eased).toLocaleString();
+          if (frame >= totalFrames) {
+            el.textContent = newTarget.toLocaleString();
+            clearInterval(timer);
+          }
+        }, frameTime);
+      });
     });
  
     showToast();
