@@ -1,18 +1,7 @@
-// Live counter from Brevo
-async function updateLiveCounter() {
-  try {
-    const response = await fetch('/api/counter');
-    const data = await response.json();
-    const count = data.count || 0;
-    document.querySelectorAll('.counter').forEach(el => {
-      el.dataset.target = count;
-    });
-  } catch (_) {}
-}
-updateLiveCounter();/* ============================================================
+/* ============================================================
    LUKE – script.js
    ============================================================ */
-
+ 
 /* ---------- Scroll-reveal (Intersection Observer) ---------- */
 const fadeEls = document.querySelectorAll('.fade-up');
 const revealObserver = new IntersectionObserver(
@@ -27,7 +16,7 @@ const revealObserver = new IntersectionObserver(
   { threshold: 0.12 }
 );
 fadeEls.forEach((el) => revealObserver.observe(el));
-
+ 
 /* ---------- Nav: switch to light mode when past hero ---------- */
 const nav = document.getElementById('nav');
 function updateNavMode() {
@@ -37,10 +26,11 @@ function updateNavMode() {
 }
 window.addEventListener('scroll', () => requestAnimationFrame(updateNavMode), { passive: true });
 updateNavMode();
-
+ 
 /* ---------- Animated counter ---------- */
 function animateCounter(el) {
   const target = parseInt(el.dataset.target, 10);
+  if (!target) return;
   const duration = 2000;
   const frameTime = 16;
   const totalFrames = duration / frameTime;
@@ -48,27 +38,40 @@ function animateCounter(el) {
   const timer = setInterval(() => {
     frame++;
     const progress = frame / totalFrames;
-    // Ease-out cubic
     const eased = 1 - Math.pow(1 - progress, 3);
     el.textContent = Math.min(Math.floor(target * eased), target).toLocaleString();
     if (frame >= totalFrames) clearInterval(timer);
   }, frameTime);
 }
-
-const counterObserver = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        // Warte bis updateLiveCounter fertig ist
-        setTimeout(() => animateCounter(entry.target), 800);
-        counterObserver.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.6 }
-);
-document.querySelectorAll('.counter').forEach((el) => counterObserver.observe(el));
-
+ 
+/* ---------- Live counter from Brevo (starts observer after fetch) ---------- */
+async function initCounter() {
+  let count = 0;
+  try {
+    const response = await fetch('/api/counter');
+    const data = await response.json();
+    count = data.count || 0;
+  } catch (_) {}
+ 
+  document.querySelectorAll('.counter').forEach(el => {
+    el.dataset.target = count;
+  });
+ 
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          animateCounter(entry.target);
+          counterObserver.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+}
+initCounter();
+ 
 /* ---------- XP bar animate on scroll ---------- */
 const xpFill = document.getElementById('xpFill');
 if (xpFill) {
@@ -85,90 +88,88 @@ if (xpFill) {
   );
   xpObserver.observe(xpFill);
 }
-
+ 
 /* ---------- Waitlist form handling ---------- */
 function handleForm(formEl) {
   if (!formEl) return;
   const input = formEl.querySelector('.form-input');
   const btn   = formEl.querySelector('.btn');
-
+ 
   formEl.addEventListener('submit', (e) => {
     e.preventDefault();
     const email = input.value.trim();
-
+ 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       input.classList.add('error');
       input.focus();
       setTimeout(() => input.classList.remove('error'), 1800);
       return;
     }
-
+ 
     // Success state
     input.disabled = true;
     btn.disabled   = true;
     btn.textContent = "✓ You're in!";
     btn.style.background = 'var(--emerald)';
     btn.style.color      = '#1d1838';
-
-    // Send to Brevo
-// Send to Brevo (secure via server)
+ 
+    // Send to Brevo (secure via server)
     fetch('/api/counter', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ email: email })
     });
-
+ 
     showToast();
   });
 }
-
+ 
 handleForm(document.getElementById('hero-form'));
-
+ 
 /* ---------- Toast ---------- */
 function showToast() {
   const toast = document.getElementById('toast');
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 4200);
 }
-
+ 
 /* ---------- Legal Modals ---------- */
 function setupModal(btnId, modalId) {
   const btn     = document.getElementById(btnId);
   const modal   = document.getElementById(modalId);
   if (!btn || !modal) return;
-
+ 
   const backdrop = modal.querySelector('.modal-backdrop');
   const closeBtn = modal.querySelector('.modal-close');
-
+ 
   function open(e) {
     e && e.preventDefault();
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
     closeBtn.focus();
   }
-
+ 
   function close() {
     modal.classList.remove('open');
     document.body.style.overflow = '';
     btn.focus();
   }
-
+ 
   btn.addEventListener('click', open);
   backdrop.addEventListener('click', close);
   closeBtn.addEventListener('click', close);
   modal.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 }
-
+ 
 setupModal('btn-terms',   'modal-terms');
 setupModal('btn-privacy', 'modal-privacy');
 setupModal('btn-imprint', 'modal-imprint');
-
+ 
 /* ---------- FAQ Accordion (single-open, scrollHeight-based) ---------- */
 const faqItems = document.querySelectorAll('.faq-item');
-
+ 
 function closeFaqItem(item) {
   const a = item.querySelector('.faq-a');
-  // Pin to current height first so browser can animate from it
   a.style.maxHeight = a.scrollHeight + 'px';
   a.style.opacity   = '1';
   requestAnimationFrame(() => {
@@ -180,7 +181,7 @@ function closeFaqItem(item) {
   item.classList.remove('open');
   item.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
 }
-
+ 
 function openFaqItem(item) {
   const a = item.querySelector('.faq-a');
   item.classList.add('open');
@@ -188,7 +189,7 @@ function openFaqItem(item) {
   a.style.maxHeight = a.scrollHeight + 'px';
   a.style.opacity   = '1';
 }
-
+ 
 faqItems.forEach((item) => {
   item.querySelector('.faq-q').addEventListener('click', () => {
     const isOpen = item.classList.contains('open');
@@ -196,7 +197,7 @@ faqItems.forEach((item) => {
     isOpen ? closeFaqItem(item) : openFaqItem(item);
   });
 });
-
+ 
 /* ---------- Smooth scroll — easeInOutCubic, 1200ms, 80px nav offset ---------- */
 function smoothScrollTo(target) {
   const element = document.querySelector(target);
@@ -219,7 +220,7 @@ function smoothScrollTo(target) {
   }
   requestAnimationFrame(animation);
 }
-
+ 
 document.querySelectorAll('.js-scroll').forEach((link) => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
@@ -228,17 +229,17 @@ document.querySelectorAll('.js-scroll').forEach((link) => {
     smoothScrollTo(href);
   });
 });
-
+ 
 /* ---------- Center the middle mockup on load (mobile) ---------- */
 (function centerMockups() {
   const scroll = document.querySelector('.mockups-scroll');
   const center = scroll && scroll.querySelector('.center-mockup');
   if (!scroll || !center) return;
-
-  // Wait for layout
+ 
   requestAnimationFrame(() => {
     const scrollMid  = scroll.scrollLeft + scroll.offsetWidth / 2;
     const cardMid    = center.offsetLeft + center.offsetWidth / 2;
     scroll.scrollLeft += cardMid - scrollMid;
   });
 })();
+ 
