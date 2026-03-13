@@ -72,6 +72,34 @@ async function initCounter() {
 }
 initCounter();
  
+/* ---------- Poll counter every 30s for real-time updates ---------- */
+setInterval(async () => {
+  try {
+    const response = await fetch('/api/counter');
+    const data = await response.json();
+    const newCount = data.count || 0;
+    document.querySelectorAll('.counter').forEach(el => {
+      const current = parseInt(el.textContent.replace(/[^0-9]/g, ''), 10) || 0;
+      if (newCount > current) {
+        el.dataset.target = newCount;
+        const duration = 600;
+        const frameTime = 16;
+        const totalFrames = duration / frameTime;
+        let frame = 0;
+        const timer = setInterval(() => {
+          frame++;
+          const eased = 1 - Math.pow(1 - frame / totalFrames, 3);
+          el.textContent = Math.round(current + (newCount - current) * eased).toLocaleString();
+          if (frame >= totalFrames) {
+            el.textContent = newCount.toLocaleString();
+            clearInterval(timer);
+          }
+        }, frameTime);
+      }
+    });
+  } catch (_) {}
+}, 30000);
+ 
 /* ---------- XP bar animate on scroll ---------- */
 const xpFill = document.getElementById('xpFill');
 if (xpFill) {
