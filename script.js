@@ -6,7 +6,6 @@ async function updateLiveCounter() {
     const count = data.count || 0;
     document.querySelectorAll('.counter').forEach(el => {
       el.dataset.target = count;
-      el.textContent = count.toLocaleString();
     });
   } catch (_) {}
 }
@@ -60,7 +59,8 @@ const counterObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        animateCounter(entry.target);
+        // Warte bis updateLiveCounter fertig ist
+        setTimeout(() => animateCounter(entry.target), 800);
         counterObserver.unobserve(entry.target);
       }
     });
