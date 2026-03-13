@@ -7,7 +7,7 @@
   <title>LUKE – Bring light to your finances.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -17,41 +17,150 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo">LUKE</a>
       <div class="nav-links">
-        <a href="#features"      class="nav-link js-scroll">Features</a>
+        <a href="#features"      class="nav-link js-scroll">HOW IT WORKS</a>
         <a href="#gamification"  class="nav-link js-scroll">Gamification</a>
         <a href="#preview"       class="nav-link js-scroll">Preview</a>
       </div>
-      <a href="#waitlist" class="btn btn-primary btn-sm js-scroll">Get Started</a>
+      <a href="#hero" class="btn btn-primary btn-sm js-scroll">Get Started</a>
     </div>
   </nav>
 
   <!-- ========== HERO ========== -->
   <section class="hero" id="hero">
-    <div class="hero-orb hero-orb-1"></div>
-    <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-orb hero-orb-3"></div>
+
+    <!-- Hanging lamp -->
+    <div class="lamp-assembly" aria-hidden="true">
+      <div class="lamp-swing">
+        <svg class="lamp-svg" viewBox="0 0 160 240" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Shade horizontal gradient (3-D side shading) -->
+            <linearGradient id="sg-h" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#090909"/>
+              <stop offset="20%"  stop-color="#252525"/>
+              <stop offset="42%"  stop-color="#383838"/>
+              <stop offset="58%"  stop-color="#313131"/>
+              <stop offset="80%"  stop-color="#1e1e1e"/>
+              <stop offset="100%" stop-color="#080808"/>
+            </linearGradient>
+            <!-- Shade vertical gradient (depth top→bottom) -->
+            <linearGradient id="sg-v" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%"   stop-color="#3c3c3c"/>
+              <stop offset="100%" stop-color="#181818"/>
+            </linearGradient>
+            <!-- Socket metallic -->
+            <linearGradient id="sock-g" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%"   stop-color="#585858"/>
+              <stop offset="45%"  stop-color="#6c6c6c"/>
+              <stop offset="100%" stop-color="#363636"/>
+            </linearGradient>
+            <!-- Purple rim glow at shade opening -->
+            <radialGradient id="rim-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#b87dff" stop-opacity="0.28"/>
+              <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Power cord (appears from above viewport) -->
+          <line x1="80" y1="0"  x2="80" y2="52" stroke="#686868" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Cord highlight -->
+          <line x1="79.2" y1="0" x2="79.2" y2="52" stroke="#999" stroke-width="0.7" stroke-linecap="round" opacity="0.42"/>
+
+          <!-- Socket housing -->
+          <rect x="63" y="50" width="34" height="20" rx="6" fill="url(#sock-g)"/>
+          <!-- Socket inner recess -->
+          <rect x="67" y="54" width="26" height="13" rx="4" fill="#2e2e2e"/>
+          <!-- Socket screw details -->
+          <circle cx="73.5" cy="60.5" r="1.8" fill="#4a4a4a"/>
+          <circle cx="86.5" cy="60.5" r="1.8" fill="#4a4a4a"/>
+
+          <!-- Shade body — vertical fill -->
+          <path d="M 61 67 L 4 215 L 156 215 L 99 67 Z" fill="url(#sg-v)"/>
+          <!-- Shade body — horizontal shading overlay -->
+          <path d="M 61 67 L 4 215 L 156 215 L 99 67 Z" fill="url(#sg-h)" opacity="0.88"/>
+          <!-- Left rim-light (subtle highlight) -->
+          <path d="M 61 67 L 4 215 L 18 215 L 70 67 Z"  fill="white" opacity="0.022"/>
+          <!-- Right shadow edge -->
+          <path d="M 99 67 L 156 215 L 143 215 L 91 67 Z" fill="black" opacity="0.10"/>
+          <!-- Top cap of shade -->
+          <ellipse cx="80" cy="67"  rx="19" ry="5"  fill="#3e3e3e"/>
+          <ellipse cx="80" cy="66"  rx="16" ry="3"  fill="#565656" opacity="0.55"/>
+
+          <!-- Bottom rim — dark fill covering inside -->
+          <ellipse cx="80" cy="215" rx="76" ry="11" fill="#141414"/>
+          <!-- Rim outer stroke -->
+          <ellipse cx="80" cy="215" rx="76" ry="11" fill="none" stroke="#383838" stroke-width="2.2"/>
+          <!-- Rim inner highlight -->
+          <ellipse cx="80" cy="214" rx="71" ry="8"  fill="none" stroke="#464646" stroke-width="1"/>
+          <!-- Purple-warm emanating glow at opening -->
+          <ellipse cx="80" cy="218" rx="66" ry="10" fill="url(#rim-glow)"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Light cone (CSS cone of light below the lamp) -->
+    <div class="light-cone" aria-hidden="true"></div>
+
+    <!-- Floating 3D decorative elements in the dark side margins -->
+    <div class="hero-floats" aria-hidden="true">
+      <!-- € Coin — top left -->
+      <div class="hero-float f-coin">
+        <div class="float-coin">
+          <svg class="coin-euro" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 5.5C13.5 4.3 11.8 3.7 10 3.7C6.4 3.7 3.5 6.6 3.5 10.2C3.5 13.8 6.4 16.7 10 16.7C11.8 16.7 13.5 16.1 15 14.9" stroke="rgba(92,45,0,0.82)" stroke-width="1.9" stroke-linecap="round"/>
+            <line x1="2" y1="8.6" x2="13.5" y2="8.6" stroke="rgba(92,45,0,0.82)" stroke-width="1.9" stroke-linecap="round"/>
+            <line x1="2" y1="11.8" x2="13.5" y2="11.8" stroke="rgba(92,45,0,0.82)" stroke-width="1.9" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <!-- Credit card / wallet — mid left -->
+      <div class="hero-float f-wallet">
+        <div class="float-card">
+          <div class="card-stripe"></div>
+          <div class="card-chip"></div>
+        </div>
+      </div>
+      <!-- XP Badge — top right -->
+      <div class="hero-float f-xp">
+        <div class="float-badge">XP</div>
+      </div>
+      <!-- Streak Flame — mid right -->
+      <div class="hero-float f-flame">
+        <div class="float-flame">🔥</div>
+      </div>
+      <!-- Trophy — lower left -->
+      <div class="hero-float f-trophy">
+        <div class="float-trophy">🏆</div>
+      </div>
+      <!-- Bar chart — lower right -->
+      <div class="hero-float f-chart">
+        <div class="float-bars">
+          <div class="fbar"></div>
+          <div class="fbar"></div>
+          <div class="fbar"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero content — sits inside the illuminated zone -->
     <div class="container hero-content">
-      <span class="badge fade-up">✦ Waitlist Open Now</span>
       <h1 class="hero-title fade-up">Bring light to<br>your finances.</h1>
-      <p class="hero-sub fade-up">Track expenses in 3 seconds. Earn XP. Beat your budget.</p>
+      <p class="hero-sub fade-up">Simple. Clear. Transparent.</p>
       <form class="waitlist-form fade-up" id="hero-form" novalidate>
         <div class="form-row">
           <input type="email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
-          <button type="submit" class="btn btn-primary">Save Now</button>
+          <button type="submit" class="btn btn-primary">Get Early Access</button>
         </div>
         <p class="form-disclaimer">No spam. Unsubscribe anytime. 🔒</p>
       </form>
       <div class="social-proof fade-up">
-        <div class="avatars">
-          <div class="avatar" style="background:#ff7675;"></div>
-          <div class="avatar" style="background:#fdcb6e;"></div>
-          <div class="avatar" style="background:#00d285;"></div>
-          <div class="avatar" style="background:#6c5ce7;"></div>
-        </div>
-        <p><strong class="counter" data-target="247">0</strong>+ students already on the list</p>
+        <p><strong class="counter" data-target="247">0</strong>+ already on the list</p>
       </div>
     </div>
+
   </section>
+
+  <!-- Dark → light bridge between hero and ticker -->
+  <div class="hero-ticker-bridge" aria-hidden="true"></div>
 
   <!-- ========== TICKER ========== -->
   <div class="ticker-wrap" aria-hidden="true">
@@ -347,21 +456,67 @@
     </div>
   </section>
 
-  <!-- ========== CTA / WAITLIST ========== -->
-  <section class="section cta-section" id="waitlist">
-    <div class="container">
-      <div class="cta-card">
-        <div class="cta-orb"></div>
-        <span class="badge fade-up">🚀 Limited Spots</span>
-        <h2 class="cta-title fade-up">Don't miss<br>your spot.</h2>
-        <p class="cta-sub fade-up">Be the first to know when LUKE launches. Early users get exclusive perks and bonus XP.</p>
-        <form class="waitlist-form fade-up" id="cta-form" novalidate>
-          <div class="form-row">
-            <input type="email" class="form-input" placeholder="your@email.com" required autocomplete="email" />
-            <button type="submit" class="btn btn-primary">Save Now</button>
+  <!-- ========== FAQ ========== -->
+  <section class="section faq-section" id="faq">
+    <div class="container faq-layout">
+
+      <div class="faq-heading fade-up">
+        <span class="section-tag">FAQ</span>
+        <h2 class="section-title">Frequently<br>Asked<br>Questions.</h2>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Wann ist LUKE verfügbar?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Wir arbeiten mit Hochdruck daran, LUKE so bald wie möglich zu launchen. Alle, die sich auf der Warteliste eintragen, werden als erste benachrichtigt und erhalten exklusive Early-Access-Vorteile sowie Bonus-XP zum Start.</p>
           </div>
-          <p class="form-disclaimer">No spam. Unsubscribe anytime. 🔒</p>
-        </form>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Ist LUKE kostenlos?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Ja – LUKE startet mit einer kostenlosen Version. Wir glauben, dass grundlegendes Budgeting für alle zugänglich sein sollte, unabhängig vom Geldbeutel. Premium-Features werden optional angeboten.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Welche Daten werden gespeichert?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>Für die Warteliste speichern wir nur deine E-Mail-Adresse. In der App selbst bleiben deine Finanzdaten auf deinem Gerät – wir verkaufen keine Daten und teilen sie nicht mit Dritten. Privacy first, immer.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Funktioniert LUKE auch auf Android?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>LUKE erscheint zunächst für iOS, da Features wie Back Tap tief ins Apple-Ökosystem integriert sind. Eine Android-Version ist bereits in Planung. Wer auf der Warteliste ist, erfährt es zuerst.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Was macht LUKE anders als andere Budget-Apps?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-a">
+            <p>LUKE ist von Studenten für Studenten gebaut – kein überladenes Interface, keine Spreadsheets, kein Boomer-Design. Einfach Betrag eingeben, fertig. Dazu ein Gamification-System, das dich motiviert dranzubleiben, anstatt nach einer Woche aufzugeben.</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

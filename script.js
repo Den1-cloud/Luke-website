@@ -1,4 +1,16 @@
-/* ============================================================
+// Live counter from Brevo
+async function updateLiveCounter() {
+  try {
+    const response = await fetch('/api/counter');
+    const data = await response.json();
+    const count = data.count || 0;
+    document.querySelectorAll('.counter').forEach(el => {
+      el.dataset.target = count;
+      el.textContent = count.toLocaleString();
+    });
+  } catch (_) {}
+}
+updateLiveCounter();/* ============================================================
    LUKE – script.js
    ============================================================ */
 
@@ -17,13 +29,15 @@ const revealObserver = new IntersectionObserver(
 );
 fadeEls.forEach((el) => revealObserver.observe(el));
 
-/* ---------- Nav scroll glass effect ---------- */
+/* ---------- Nav: switch to light mode when past hero ---------- */
 const nav = document.getElementById('nav');
-window.addEventListener(
-  'scroll',
-  () => nav.classList.toggle('scrolled', window.scrollY > 48),
-  { passive: true }
-);
+function updateNavMode() {
+  const hero = document.getElementById('hero');
+  const heroBottom = hero ? hero.getBoundingClientRect().bottom : 0;
+  nav.classList.toggle('scrolled-light', heroBottom < 80);
+}
+window.addEventListener('scroll', () => requestAnimationFrame(updateNavMode), { passive: true });
+updateNavMode();
 
 /* ---------- Animated counter ---------- */
 function animateCounter(el) {
@@ -96,21 +110,19 @@ function handleForm(formEl) {
     btn.style.background = 'var(--emerald)';
     btn.style.color      = '#1d1838';
 
-    // Persist (best-effort, no backend)
-    try {
-      const list = JSON.parse(localStorage.getItem('luke_waitlist') || '[]');
-      if (!list.includes(email)) {
-        list.push(email);
-        localStorage.setItem('luke_waitlist', JSON.stringify(list));
-      }
-    } catch (_) {}
+    // Send to Brevo
+// Send to Brevo (secure via server)
+    fetch('/api/counter', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    });
 
     showToast();
   });
 }
 
 handleForm(document.getElementById('hero-form'));
-handleForm(document.getElementById('cta-form'));
 
 /* ---------- Toast ---------- */
 function showToast() {
@@ -151,16 +163,69 @@ setupModal('btn-terms',   'modal-terms');
 setupModal('btn-privacy', 'modal-privacy');
 setupModal('btn-imprint', 'modal-imprint');
 
-/* ---------- Smooth scroll for internal nav links ---------- */
-document.querySelectorAll('.js-scroll, [href="#waitlist"]').forEach((link) => {
+/* ---------- FAQ Accordion (single-open, scrollHeight-based) ---------- */
+const faqItems = document.querySelectorAll('.faq-item');
+
+function closeFaqItem(item) {
+  const a = item.querySelector('.faq-a');
+  // Pin to current height first so browser can animate from it
+  a.style.maxHeight = a.scrollHeight + 'px';
+  a.style.opacity   = '1';
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      a.style.maxHeight = '0';
+      a.style.opacity   = '0';
+    });
+  });
+  item.classList.remove('open');
+  item.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+}
+
+function openFaqItem(item) {
+  const a = item.querySelector('.faq-a');
+  item.classList.add('open');
+  item.querySelector('.faq-q').setAttribute('aria-expanded', 'true');
+  a.style.maxHeight = a.scrollHeight + 'px';
+  a.style.opacity   = '1';
+}
+
+faqItems.forEach((item) => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+    faqItems.forEach((i) => { if (i !== item) closeFaqItem(i); });
+    isOpen ? closeFaqItem(item) : openFaqItem(item);
+  });
+});
+
+/* ---------- Smooth scroll — easeInOutCubic, 1200ms, 80px nav offset ---------- */
+function smoothScrollTo(target) {
+  const element = document.querySelector(target);
+  if (!element) return;
+  const navHeight = 80;
+  const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - navHeight;
+  const startPosition = window.pageYOffset;
+  const distance = targetPosition - startPosition;
+  const duration = 1200;
+  let start = null;
+  function easeInOutCubic(t) {
+    return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+  }
+  function animation(currentTime) {
+    if (!start) start = currentTime;
+    const elapsed = currentTime - start;
+    const progress = Math.min(elapsed / duration, 1);
+    window.scrollTo(0, startPosition + distance * easeInOutCubic(progress));
+    if (progress < 1) requestAnimationFrame(animation);
+  }
+  requestAnimationFrame(animation);
+}
+
+document.querySelectorAll('.js-scroll').forEach((link) => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
     if (!href || !href.startsWith('#')) return;
-    const target = document.querySelector(href);
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    e.preventDefault();
+    smoothScrollTo(href);
   });
 });
 
