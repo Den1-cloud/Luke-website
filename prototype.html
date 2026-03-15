@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>LUKE – Ask a Friend</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+body{background:#0d0118;font-family:-apple-system,sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow-x:hidden;}
+.status-bar{width:100%;max-width:390px;padding:14px 24px 4px;display:flex;justify-content:space-between;}
+.status-bar span{color:#fff;font-size:13px;font-weight:500;}
+.phone{width:100%;max-width:390px;flex:1;display:flex;flex-direction:column;position:relative;}
+.screen{display:none;flex-direction:column;flex:1;min-height:calc(100vh - 40px);}
+.screen.active{display:flex;}
+.nav-bar{padding:12px 20px;display:flex;align-items:center;gap:12px;border-bottom:0.5px solid rgba(255,255,255,0.08);}
+.back-btn{color:#7c3aed;font-size:15px;cursor:pointer;padding:4px 0;}
+.nav-title{color:#fff;font-size:17px;font-weight:500;flex:1;text-align:center;}
+.nav-right{color:#7c3aed;font-size:15px;width:60px;text-align:right;}
+.content{padding:20px;flex:1;display:flex;flex-direction:column;gap:16px;overflow-y:auto;padding-bottom:40px;}
+.label-sm{color:rgba(255,255,255,0.4);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+.photo-box{background:#1a0533;border-radius:20px;height:200px;display:flex;align-items:center;justify-content:center;border:1.5px dashed rgba(124,58,237,0.4);cursor:pointer;overflow:hidden;transition:all 0.2s;}
+.photo-inner{display:flex;flex-direction:column;align-items:center;gap:8px;}
+.photo-inner span:first-child{font-size:40px;}
+.photo-inner span:last-child{color:rgba(255,255,255,0.4);font-size:13px;}
+.amount-section{background:rgba(124,58,237,0.12);border-radius:20px;padding:20px;display:flex;align-items:baseline;gap:8px;}
+.currency{color:rgba(255,255,255,0.4);font-size:28px;}
+.amount-display{color:#fff;font-size:48px;font-weight:300;letter-spacing:-2px;flex:1;}
+.item-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;color:#fff;font-size:15px;width:100%;outline:none;}
+.item-input::placeholder{color:rgba(255,255,255,0.3);}
+.friends-list{display:flex;flex-direction:column;gap:8px;}
+.friend-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:16px;background:rgba(255,255,255,0.04);cursor:pointer;border:1.5px solid transparent;transition:all 0.2s;active:scale(0.98);}
+.friend-row.selected{background:rgba(124,58,237,0.15);border-color:#7c3aed;}
+.avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:500;flex-shrink:0;}
+.friend-info{flex:1;}
+.friend-name{color:#fff;font-size:15px;}
+.friend-sub{color:rgba(255,255,255,0.4);font-size:12px;margin-top:1px;}
+.checkmark{width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.checkmark.checked{background:#7c3aed;border-color:#7c3aed;color:#fff;font-size:12px;}
+.btn-main{background:#7c3aed;color:#fff;border:none;border-radius:16px;padding:18px;font-size:16px;font-weight:500;cursor:pointer;width:100%;transition:transform 0.1s;}
+.btn-main:active{transform:scale(0.97);}
+.sent-screen{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 24px;gap:20px;text-align:center;}
+.sent-icon{width:80px;height:80px;background:rgba(124,58,237,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:36px;}
+.sent-title{color:#fff;font-size:24px;font-weight:500;}
+.sent-sub{color:rgba(255,255,255,0.5);font-size:15px;line-height:1.6;}
+.notif-card{background:#1a0533;border-radius:20px;padding:20px;border:1px solid rgba(124,58,237,0.2);}
+.notif-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;}
+.notif-label{color:rgba(255,255,255,0.4);font-size:13px;}
+.notif-val{color:#fff;font-size:14px;font-weight:500;}
+.warning-box{background:rgba(255,149,0,0.1);border-radius:14px;padding:14px;display:flex;gap:10px;align-items:flex-start;}
+.warning-text{color:#f59e0b;font-size:13px;line-height:1.5;}
+.verdict-btns{display:flex;gap:10px;}
+.btn-yes{flex:1;background:rgba(0,210,133,0.12);color:#00d285;border:1px solid rgba(0,210,133,0.25);border-radius:14px;padding:14px;font-size:15px;cursor:pointer;transition:all 0.2s;}
+.btn-no{flex:1;background:rgba(255,99,99,0.12);color:#ff6363;border:1px solid rgba(255,99,99,0.25);border-radius:14px;padding:14px;font-size:15px;cursor:pointer;transition:all 0.2s;}
+.btn-yes.active{background:rgba(0,210,133,0.3);transform:scale(1.02);}
+.btn-no.active{background:rgba(255,99,99,0.3);transform:scale(1.02);}
+.comment-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px 16px;color:#fff;font-size:14px;width:100%;outline:none;resize:none;}
+.comment-input::placeholder{color:rgba(255,255,255,0.3);}
+.reply-card{background:#1a0533;border-radius:20px;padding:20px;border:1px solid rgba(0,210,133,0.2);}
+.verdict-badge{display:inline-block;padding:5px 14px;border-radius:20px;font-size:12px;margin-bottom:12px;}
+.verdict-no{background:rgba(255,99,99,0.15);color:#ff6363;}
+.verdict-yes{background:rgba(0,210,133,0.15);color:#00d285;}
+.reply-msg{color:rgba(255,255,255,0.85);font-size:15px;line-height:1.6;font-style:italic;}
+.reply-from{color:rgba(255,255,255,0.3);font-size:12px;margin-top:10px;}
+.score-row{display:flex;gap:10px;}
+.score-card{flex:1;border-radius:14px;padding:16px;text-align:center;}
+.score-card.no{background:rgba(255,99,99,0.1);border:1px solid rgba(255,99,99,0.2);}
+.score-card.yes{background:rgba(0,210,133,0.1);border:1px solid rgba(0,210,133,0.2);}
+.score-num{font-size:28px;font-weight:500;}
+.score-card.no .score-num{color:#ff6363;}
+.score-card.yes .score-num{color:#00d285;}
+.score-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.pending-row{background:rgba(255,255,255,0.04);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;}
+.pending-avatar{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.3);font-size:14px;}
+.pending-text{color:rgba(255,255,255,0.35);font-size:13px;}
+.btn-skip{background:rgba(255,99,99,0.1);color:#ff6363;border:1px solid rgba(255,99,99,0.15);border-radius:16px;padding:18px;font-size:15px;cursor:pointer;width:100%;}
+.divider{height:0.5px;background:rgba(255,255,255,0.08);}
+.shoe-preview{width:100%;height:100%;background:linear-gradient(135deg,#1a0533,#2d1b4e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;}
+.tab-bar{display:flex;background:#0d0118;border-top:0.5px solid rgba(255,255,255,0.08);padding:8px 0 24px;}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 0;}
+.tab-icon{font-size:20px;}
+.tab-label{font-size:10px;color:rgba(255,255,255,0.3);}
+.tab.active .tab-label{color:#7c3aed;}
+</style>
+</head>
+<body>
+
+<div class="status-bar">
+  <span>9:41</span>
+  <span style="letter-spacing:2px;">●●●</span>
+</div>
+
+<div class="phone">
+
+  <!-- SCREEN 1: Send Request -->
+  <div class="screen active" id="screen-send">
+    <div class="nav-bar">
+      <span class="back-btn">← Back</span>
+      <span class="nav-title">Ask a Friend</span>
+      <span class="nav-right"></span>
+    </div>
+    <div class="content">
+      <div>
+        <div class="label-sm">Item Photo</div>
+        <div class="photo-box" id="photo-box" onclick="addPhoto()">
+          <div class="photo-inner">
+            <span>📸</span>
+            <span>Tap to add photo</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="label-sm">Amount</div>
+        <div class="amount-section">
+          <span class="currency">€</span>
+          <span class="amount-display">180</span>
+        </div>
+      </div>
+      <div>
+        <div class="label-sm">What is it?</div>
+        <input class="item-input" value="Nike Air Max 95 — Snipes" />
+      </div>
+      <div>
+        <div class="label-sm">Ask who?</div>
+        <div class="friends-list">
+          <div class="friend-row selected" onclick="toggleFriend(this)">
+            <div class="avatar" style="background:#7c3aed;color:#fff;">M</div>
+            <div class="friend-info">
+              <div class="friend-name">Marco</div>
+              <div class="friend-sub">Usually responds fast</div>
+            </div>
+            <div class="checkmark checked">✓</div>
+          </div>
+          <div class="friend-row" onclick="toggleFriend(this)">
+            <div class="avatar" style="background:#0ea5e9;color:#fff;">S</div>
+            <div class="friend-info">
+              <div class="friend-name">Sara</div>
+              <div class="friend-sub">Fashion expert 👗</div>
+            </div>
+            <div class="checkmark"></div>
+          </div>
+          <div class="friend-row" onclick="toggleFriend(this)">
+            <div class="avatar" style="background:#f59e0b;color:#1a0533;">J</div>
+            <div class="friend-info">
+              <div class="friend-name">Julian</div>
+              <div class="friend-sub">Brutally honest</div>
+            </div>
+            <div class="checkmark"></div>
+          </div>
+        </div>
+      </div>
+      <button class="btn-main" onclick="goTo('screen-sent')">Send Request 🚀</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: Sent -->
+  <div class="screen" id="screen-sent">
+    <div class="sent-screen">
+      <div class="sent-icon">🚀</div>
+      <div class="sent-title">Request sent!</div>
+      <div class="sent-sub">Marco gets a notification now. You'll hear back soon — hold tight before buying!</div>
+      <button class="btn-main" onclick="goTo('screen-send')" style="margin-top:8px;">Back to LUKE</button>
+      <button onclick="goTo('screen-friend')" style="background:none;border:none;color:rgba(255,255,255,0.3);font-size:13px;cursor:pointer;margin-top:8px;">Preview: Friend's view →</button>
+    </div>
+    <div class="tab-bar">
+      <div class="tab"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></div>
+      <div class="tab"><span class="tab-icon">📊</span><span class="tab-label">Insights</span></div>
+      <div class="tab"><span class="tab-icon">➕</span><span class="tab-label" style="color:#7c3aed;">Log</span></div>
+      <div class="tab active"><span class="tab-icon">👥</span><span class="tab-label">Friends</span></div>
+      <div class="tab"><span class="tab-icon">👤</span><span class="tab-label">Profile</span></div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: Friend receives -->
+  <div class="screen" id="screen-friend">
+    <div class="nav-bar">
+      <span class="back-btn" onclick="goTo('screen-sent')">← Back</span>
+      <span class="nav-title">Spend Request</span>
+      <span class="nav-right"></span>
+    </div>
+    <div class="content">
+      <div style="text-align:center;padding:4px 0;">
+        <div style="color:rgba(255,255,255,0.5);font-size:14px;">Deni wants to buy something 👀</div>
+      </div>
+      <div class="photo-box" style="cursor:default;">
+        <div class="shoe-preview">
+          <span style="font-size:56px;">👟</span>
+          <span style="color:rgba(255,255,255,0.6);font-size:13px;">Nike Air Max 95</span>
+        </div>
+      </div>
+      <div class="notif-card">
+        <div class="notif-row">
+          <span class="notif-label">Item</span>
+          <span class="notif-val">Nike Air Max 95</span>
+        </div>
+        <div class="divider" style="margin:4px 0;"></div>
+        <div class="notif-row">
+          <span class="notif-label">Amount</span>
+          <span class="notif-val" style="color:#7c3aed;font-size:18px;">€ 180</span>
+        </div>
+        <div class="divider" style="margin:4px 0;"></div>
+        <div class="notif-row">
+          <span class="notif-label">Store</span>
+          <span class="notif-val">Snipes</span>
+        </div>
+      </div>
+      <div class="warning-box">
+        <span style="font-size:16px;">⚠️</span>
+        <span class="warning-text">Deni already spent €240 on clothes this month. Monthly budget: €200. That's 40€ over already.</span>
+      </div>
+      <div>
+        <div class="label-sm">Your verdict</div>
+        <div class="verdict-btns">
+          <button class="btn-yes" id="btn-yes" onclick="selectVerdict('yes')">Buy it ✓</button>
+          <button class="btn-no" id="btn-no" onclick="selectVerdict('no')">Don't buy ✗</button>
+        </div>
+      </div>
+      <div>
+        <div class="label-sm">Add a comment (optional)</div>
+        <textarea class="comment-input" rows="3" id="comment-field" placeholder="e.g. Bro you already have 3 pairs like this...">Bro you already have 3 pairs like this. You're literally broke 💀 put it back</textarea>
+      </div>
+      <button class="btn-main" onclick="sendReply()">Send Reply</button>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: Reply received -->
+  <div class="screen" id="screen-reply">
+    <div class="nav-bar">
+      <span class="back-btn" onclick="goTo('screen-send')">← Home</span>
+      <span class="nav-title">Ask a Friend</span>
+      <span class="nav-right"></span>
+    </div>
+    <div class="content">
+      <div style="text-align:center;">
+        <div style="color:rgba(255,255,255,0.5);font-size:13px;">Nike Air Max 95 · € 180 · Snipes</div>
+      </div>
+      <div class="score-row">
+        <div class="score-card no">
+          <div class="score-num" id="score-no">1</div>
+          <div class="score-label">Don't buy</div>
+        </div>
+        <div class="score-card yes">
+          <div class="score-num" id="score-yes">0</div>
+          <div class="score-label">Buy it</div>
+        </div>
+      </div>
+      <div class="reply-card" id="reply-card">
+        <div class="verdict-badge verdict-no" id="verdict-badge">✗ Don't buy</div>
+        <div class="reply-msg" id="reply-msg">"Bro you already have 3 pairs like this. You're literally broke 💀 put it back"</div>
+        <div class="reply-from">— Marco · just now</div>
+      </div>
+      <div class="pending-row">
+        <div class="pending-avatar">S</div>
+        <span class="pending-text">Sara hasn't replied yet...</span>
+      </div>
+      <div class="pending-row">
+        <div class="pending-avatar">J</div>
+        <span class="pending-text">Julian hasn't replied yet...</span>
+      </div>
+      <button class="btn-skip" onclick="goTo('screen-send')">I'll skip it this time 🙏</button>
+    </div>
+    <div class="tab-bar">
+      <div class="tab"><span class="tab-icon">🏠</span><span class="tab-label">Home</span></div>
+      <div class="tab"><span class="tab-icon">📊</span><span class="tab-label">Insights</span></div>
+      <div class="tab"><span class="tab-icon">➕</span><span class="tab-label">Log</span></div>
+      <div class="tab active"><span class="tab-icon">👥</span><span class="tab-label" style="color:#7c3aed;">Friends</span></div>
+      <div class="tab"><span class="tab-icon">👤</span><span class="tab-label">Profile</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function toggleFriend(el) {
+  el.classList.toggle('selected');
+  const c = el.querySelector('.checkmark');
+  c.classList.toggle('checked');
+  c.textContent = c.classList.contains('checked') ? '✓' : '';
+}
+
+function addPhoto() {
+  document.getElementById('photo-box').innerHTML = '<div class="shoe-preview"><span style="font-size:56px;">👟</span><span style="color:rgba(255,255,255,0.6);font-size:13px;">Nike Air Max 95</span></div>';
+}
+
+let verdict = 'no';
+function selectVerdict(v) {
+  verdict = v;
+  document.getElementById('btn-yes').classList.toggle('active', v === 'yes');
+  document.getElementById('btn-no').classList.toggle('active', v === 'no');
+}
+
+function sendReply() {
+  const comment = document.getElementById('comment-field').value;
+  const badge = document.getElementById('verdict-badge');
+  const msg = document.getElementById('reply-msg');
+  const card = document.getElementById('reply-card');
+  const sno = document.getElementById('score-no');
+  const syes = document.getElementById('score-yes');
+
+  if(verdict === 'yes') {
+    badge.className = 'verdict-badge verdict-yes';
+    badge.textContent = '✓ Buy it';
+    card.style.borderColor = 'rgba(0,210,133,0.2)';
+    syes.textContent = '1';
+    sno.textContent = '0';
+  } else {
+    badge.className = 'verdict-badge verdict-no';
+    badge.textContent = '✗ Don\'t buy';
+    card.style.borderColor = 'rgba(255,99,99,0.2)';
+    sno.textContent = '1';
+    syes.textContent = '0';
+  }
+  msg.textContent = '"' + (comment || 'No comment') + '"';
+  goTo('screen-reply');
+}
+</script>
+</body>
+</html>
